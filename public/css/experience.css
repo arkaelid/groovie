@@ -1,0 +1,2202 @@
+/* Variables */
+:root {
+    --primary: #8B5CF6;
+    --primary-light: rgba(139, 92, 246, 0.1);
+    --secondary: #6366F1;
+    --text-dark: #1F2937;
+    --text-gray: #6B7280;
+    --background: #F8F7FF;
+    --white: #FFFFFF;
+    --border: #E5E7EB;
+    --pink: #FEE2E2;
+    --green: #DCFCE7;
+    --purple: #EDE9FE;
+    --actualites-bg: #E0FFE5;
+    --jeux-bg: #E0FFF7;
+    --playlists-bg: #FFE0E0;
+    --trajet-bg: #FFEB82;
+    --dark-blue: #000B58;
+    --forest: #DCFCE7;
+    --light-pink: #FFE0E0;
+    --kaki: #B6FFC0;
+    --iris: #E7F8E9;
+    --wallet-bg: #F3F4FF;
+    --primary-color: #000B58;
+}
+
+/* Container principal */
+.trajet-container {
+    padding: 32px 64px;
+    margin: 0 auto;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Style des cartes */
+.card-section {
+    position: absolute;
+    width: 100%;
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+.card-header {
+    padding: 0;
+    margin-bottom: 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+}
+
+
+.card-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.card-arrow {
+    width: 24px;
+    height: 24px;
+    margin-left: auto;
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+    transform: translateY(-50%) rotate(90deg);
+    position: absolute;
+    right: 16px;
+    top: 50%;
+}
+
+.card:not([data-index="1"]) .card-arrow {
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+.card[data-index="1"] .card-arrow {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.card-title span {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000B58;
+}
+
+/* États des cartes */
+.card-section.folded .card-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Couleurs spécifiques */
+.mes-trajets-section {
+    background: #E7E0FF;
+    z-index: 3;
+}
+
+.offres-section {
+    background: #B6FFC0;
+    z-index: 2;
+    transform: translateY(200px);
+}
+
+.preferences-section {
+    background: #FFE7E7;
+    z-index: 1;
+    transform: translateY(400px);
+}
+
+/* État replié */
+.card-section.folded {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+/* Sections de contenu */
+.content-section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.content-section.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Style commun pour les cartes */
+.card {
+    position: absolute;
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 24px 32px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), top 0s;
+    overflow: hidden;
+    border: none;
+    transform-origin: center;
+    backdrop-filter: blur(8px);
+}
+
+
+
+/* Animation du contenu */
+.card-content {
+    opacity: 0;
+    height: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(20px);
+}
+
+.card[data-index="1"] .card-content {
+    opacity: 1;
+    height: auto;
+    transform: translateY(0);
+}
+
+/* Style du titre */
+.card-title {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    justify-content: flex-start;
+    transition: all 0.3s ease;
+}
+
+.card[data-index="2"] .card-title,
+.card[data-index="3"] .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+/* Animation de la flèche */
+.card-arrow {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:not([data-index="1"]):hover .card-arrow {
+    transform: rotate(90deg);
+}
+
+/* Amélioration des styles spécifiques */
+#preferences-card {
+    background: linear-gradient(135deg, #FFE7E7 0%, #FFD6D6 100%);
+}
+
+#offres-card {
+    background: linear-gradient(135deg, #B6FFC0 0%, #A1FFB0 100%);
+}
+
+#trajets-card {
+    background: linear-gradient(135deg, #E7E0FF 0%, #D6CBFF 100%);
+}
+
+/* Tabs Navigation */
+.tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.tab {
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.tab.active {
+    background: var(--purple);
+    color: white;
+}
+
+.count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 14px;
+}
+
+/* Grille des cartes */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+/* Style des cartes de trajet */
+.trajet-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 12px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.trajet-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* En-tête de la carte */
+.trajet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+/* Style pour le groupe d'utilisateurs */
+.user-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-group .add-user {
+    width: 32px;
+    height: 32px;
+    background: #8D6CD9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    border: 2px solid white;
+}
+
+.user-avatars {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatars img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-left: -8px;
+}
+
+.user-avatars img:first-child {
+    margin-left: 0;
+}
+
+/* Style pour le bouton de téléchargement */
+.download-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.download-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour le contenu principal */
+.trajet-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trajet-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.trajet-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F2937;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.groovies-count {
+    font-size: 14px;
+    color: #8D6CD9;
+}
+
+/* Style pour l'icône de transport et la date */
+.transport-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.transport-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.trajet-date {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+/* Style pour la flèche de droite */
+.arrow-right {
+    width: 24px;
+    height: 24px;
+    color: #8D6CD9;
+}
+
+/* Style des cartes d'offres */
+.offer-card {
+    height: 240px;
+    position: relative;
+}
+
+.offer-image {
+    height: 140px;
+    position: relative;
+    background: var(--background);
+}
+
+.offer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.offer-content {
+    padding: 1rem;
+}
+
+.offer-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.offer-details {
+    font-size: 0.875rem;
+    color: var(--text-gray);
+}
+
+.offer-tag {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--primary);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Style des cartes de préférences */
+.preference-card {
+    padding: 1.5rem;
+}
+
+.preference-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.preference-icon {
+    width: 3rem;
+    height: 3rem;
+    background: var(--primary-light);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preference-icon img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.preference-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.preference-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.preference-option {
+    padding: 0.5rem 1rem;
+    background: var(--background);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    color: var(--text-gray);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preference-option:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.preference-option.selected {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* État vide */
+.empty-state {
+    text-align: center;
+    padding: 0;
+}
+
+.empty-state h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--midnight-blue);
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 15px;
+    color: var(--midnight-blue);
+    opacity: 0.7;
+    margin-bottom: 24px;
+}
+
+.empty-state-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #8D6CD9;
+    color: white;
+    border: none;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.empty-state-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state-button i {
+    font-size: 14px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .trajet-container {
+        padding: 16px;
+        margin-left: 0;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab {
+        white-space: nowrap;
+    }
+}
+
+/* Navigation des onglets */
+.tabs-nav {
+    display: flex;
+    gap: 24px;
+    padding: 16px 64px;
+    margin-top: 7rem;
+    margin-left: 100px;
+}
+
+.tab-link {
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    color: #000B58;
+    background: transparent;
+}
+
+.tab-link[href="#preferences"].active {
+    background-color: #FF9999;
+    color: white;
+}
+
+.tab-link[href="#offres"].active {
+    background-color: #4ABF75;
+    color: white;
+}
+
+.tab-link[href="#trajets"].active {
+    background-color: #8D6CD9;
+    color: white;
+}
+
+.tab-link[href="#preferences"]:not(.active):hover {
+    background-color: rgba(255, 153, 153, 0.1);
+}
+
+.tab-link[href="#offres"]:not(.active):hover {
+    background-color: rgba(74, 191, 117, 0.1);
+}
+
+.tab-link[href="#trajets"]:not(.active):hover {
+    background-color: rgba(141, 108, 217, 0.1);
+}
+
+/* Style commun pour les sections */
+.preferences-section,
+.offres-section,
+.mes-trajets-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 24px;
+    padding: 32px;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+/* Z-index et position des sections */
+.preferences-section {
+    background: #FFE7E7;
+    z-index: 1;
+    transform-origin: top;
+}
+
+.offres-section {
+    background: #B6FFC0;
+    z-index: 2;
+    transform-origin: top;
+}
+
+.mes-trajets-section {
+    background: #E7E0FF;
+    z-index: 3;
+    transform-origin: top;
+}
+
+/* État déplié/replié des sections */
+.preferences-section.hidden,
+.offres-section.hidden,
+.mes-trajets-section.hidden {
+    transform: scale(0.95);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.preferences-section:not(.hidden),
+.offres-section:not(.hidden),
+.mes-trajets-section:not(.hidden) {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Ajustement des marges pour l'effet d'empilement */
+.preferences-section {
+    margin-top: 400px;
+}
+
+.offres-section {
+    margin-top: 200px;
+}
+
+.mes-trajets-section {
+    margin-top: 0;
+}
+
+/* Animation de transition */
+.preferences-section,
+.offres-section,
+.mes-trajets-section {
+    transition: all 0.3s ease;
+}
+
+/* Section Préférences */
+.preferences-section {
+    background: #FFE7E7;
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.preferences-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.preferences-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.preferences-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.preferences-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--midnight-blue);
+}
+
+.preferences-title span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.preferences-header .fa-chevron-down {
+    font-size: 16px;
+    color: var(--midnight-blue);
+    opacity: 0.5;
+}
+
+.header-separator {
+    height: 1px;
+    background-color: rgba(0, 11, 88, 0.1);
+    margin: 16px 0;
+    width: 100%;
+}
+
+.separator {
+    height: 1px;
+    background-color: rgba(0, 11, 88, 0.1);
+    margin: 16px 0;
+    width: 100%;
+}
+
+/* Mise à jour des espacements des groupes */
+.preference-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.preference-group:last-child .separator {
+    display: none;
+}
+
+.preference-group label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--midnight-blue);
+}
+
+.preference-group input,
+.preference-group select {
+    height: 48px;
+    border-radius: 12px;
+    border: none;
+    padding: 0 16px;
+    background: white;
+    font-size: 15px;
+    color: var(--midnight-blue);
+}
+
+.date-group {
+    display: flex;
+    gap: 16px;
+}
+
+.date-input {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.date-input select {
+    height: 48px;
+    border-radius: 12px;
+    border: none;
+    padding: 0 16px;
+    background: white;
+    font-size: 15px;
+    color: var(--midnight-blue);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23000B58' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
+
+.transport-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.transport-option {
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    color: var(--midnight-blue);
+}
+
+.transport-option i {
+    font-size: 16px;
+}
+
+.transport-option:hover,
+.transport-option.active {
+    background: var(--purple);
+    color: white;
+}
+
+/* Section Offres Disponibles */
+.offres-section {
+    background: #B6FFC0;
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.offres-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.offres-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.offres-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.offres-title span {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--midnight-blue);
+}
+
+.offres-header .fa-chevron-down {
+    font-size: 16px;
+    color: var(--midnight-blue);
+    opacity: 0.5;
+}
+
+/* Styles des filtres */
+.offres-filters {
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.offres-filters.show {
+    opacity: 1;
+    height: auto;
+    display: block;
+    margin-bottom: 24px;
+}
+
+/* Style des boutons de filtres */
+.filter-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.filter-button {
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.filter-button[data-action="all"] {
+    background: white;
+    color: #1F2937;
+}
+
+.filter-button[data-action="filter"] {
+    background: #000B58;
+    color: white;
+}
+
+.filter-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Style de la section des offres */
+.offres-section {
+    margin-top: 32px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.section-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.see-all {
+    font-size: 14px;
+    color: #4ABF75;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.see-all:hover {
+    color: #3da364;
+    text-decoration: underline;
+}
+
+/* Style de la grille d'offres */
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 16px;
+}
+
+.offer-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.offer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.offer-image {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.offer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.offer-card:hover .offer-image img {
+    transform: scale(1.05);
+}
+
+.groovies-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(141, 108, 217, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+}
+
+.offer-icon {
+    position: absolute;
+    bottom: -20px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.offer-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.offer-content {
+    padding: 24px;
+    padding-top: 32px;
+}
+
+.offer-content h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 8px 0;
+}
+
+.offer-content p {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* Section Mes Trajets */
+.mes-trajets-section {
+    background: #E7E0FF;
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.mes-trajets-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.mes-trajets-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mes-trajets-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.mes-trajets-title span {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--midnight-blue);
+}
+
+.trajets-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 100px;
+    width: fit-content;
+}
+
+.trajet-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 24px;
+    border-radius: 100px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    color: var(--text-dark);
+}
+
+.trajet-tab span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(141, 108, 217, 0.1);
+    color: #8D6CD9;
+}
+
+.trajet-tab.active {
+    background: #8D6CD9;
+    color: white;
+    box-shadow: 0 4px 12px rgba(141, 108, 217, 0.2);
+}
+
+.trajet-tab.active span {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.trajet-tab:not(.active):hover {
+    background: rgba(141, 108, 217, 0.05);
+}
+
+.trajet-tab, .trajet-tab span {
+    transition: all 0.3s ease-in-out;
+}
+
+.trajet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.trajet-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.trajet-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.trajet-info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.trajet-users {
+    display: flex;
+    align-items: center;
+}
+
+.trajet-users img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-left: -8px;
+    object-fit: cover;
+}
+
+.trajet-time {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--midnight-blue);
+}
+
+.trajet-date {
+    font-size: 14px;
+    color: var(--midnight-blue);
+    opacity: 0.7;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.cards-container {
+    position: relative;
+    width: 80%;
+    height: 100vh;
+    margin-left: 3rem;
+    margin-top: 5rem;
+    padding: 0 100px;
+    margin-bottom: 100px;
+}
+
+/* Styles spécifiques pour chaque carte */
+#preferences-card {
+    background: #FFE7E7;
+}
+
+#offres-card {
+    background: #B6FFC0;
+}
+
+#trajets-card {
+    background: #E7E0FF;
+}
+
+
+/* États des cartes selon leur position */
+.card[data-index="1"] {
+    top: 0;
+    height: calc(100vh - 285px);
+    z-index: 0;
+}
+
+.card[data-index="2"] {
+    top: calc(100vh - 295px);
+    z-index: 1;
+    height: 90px;
+    transform: scale(0.98);
+    background: var(--actualites-bg);
+}
+
+.card[data-index="3"] {
+    top: calc(99vh - 212px);
+    z-index: 2;
+    height: 90px;
+    transform: scale(0.96);
+    background: var(--jeux-bg);
+}
+
+.card[data-index="4"] {
+    top: calc(100vh - 143px);
+    z-index: 3;
+    height: 90px;
+    transform: scale(0.94);
+    background: var(--playlists-bg);
+}
+
+.card[data-index="2"] .card-title,
+.card[data-index="3"] .card-title {
+    font-size: 1.2rem;
+}
+
+/* Effets de hover */
+.card:hover {
+    filter: brightness(1.02);
+}
+
+.card[data-index="2"]:hover {
+    top: calc(100vh - 305px);
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card[data-index="3"]:hover {
+    top: calc(99vh - 222px);
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card[data-index="4"]:hover {
+    top: calc(100vh - 153px);
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Styles pour le contenu interne */
+.trajets-tabs,
+.empty-state,
+.offres-filters,
+.preferences-form {
+    opacity: inherit;
+    height: inherit;
+}
+/* Ajustement du hover sur les cartes repliées */
+.card[data-index="2"]:hover .card-arrow,
+.card[data-index="3"]:hover .card-arrow {
+    transform: rotate(-80deg);
+}
+
+/* Offers Sections */
+.offers-section {
+    margin-top: 24px;
+    padding-bottom: 16px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    margin-bottom: 20px;
+}
+
+.section-header h3 {
+    font-size: 20px;
+    color: var(--purple);
+    font-weight: 500;
+    margin: 0;
+}
+
+.see-all {
+    color: var(--midnight-blue);
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Offers Grid */
+.offers-grid {
+    padding: 0 24px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.offer-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    height: 240px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.offer-image {
+    position: relative;
+    height: 140px;
+    min-height: 140px;
+    width: 100%;
+    background: #f0f0f0;
+}
+
+.offer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.groovies-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--purple);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.offer-icon {
+    position: absolute;
+    bottom: -16px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.offer-content {
+    padding: 20px 16px;
+    background: white;
+    flex: 1;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.offer-content h4 {
+    font-size: 16px;
+    color: var(--midnight-blue);
+    margin: 0;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.offer-content p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.trajets-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Ajoute un espace entre les cards */
+    justify-content: center; /* Centre les cards */
+}
+
+.trajet-card {
+    width: 90%; /* Ajuste la largeur pour bien remplir la div */
+    max-width: 400px; /* Empêche que ce soit trop large */
+    background: #B3B3B3; /* Fond gris */
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: "Arial", sans-serif;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.trajet-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.trajet-icon img {
+    width: 32px; /* Ajuste la taille de l'icône */
+    height: 32px;
+    margin-right: 5px;
+}
+
+.trajet-details {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.trajet-card-body {
+    text-align: left;
+    margin: 10px 0;
+}
+
+.trajet-card-body h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.trajet-card-body p {
+    font-size: 14px;
+    color: black;
+}
+
+.trajet-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trajet-card-footer img {
+    width: 25px;
+    height: 25px;
+}
+
+/* Style du conteneur de sélection du festival */
+.festival-select-container {
+    margin: 24px 0;
+    width: 100%;
+    position: relative;
+}
+
+.festival-select-container label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6B7280;
+    margin-bottom: 8px;
+}
+
+#festival-select {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 15px;
+    color: #1F2937;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%238D6CD9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    padding-right: 48px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+}
+
+#festival-select:hover {
+    background-color: white;
+    border-color: rgba(141, 108, 217, 0.3);
+    box-shadow: 0 4px 12px rgba(141, 108, 217, 0.1);
+    transform: translateY(-1px);
+}
+
+#festival-select:focus {
+    outline: none;
+    background-color: white;
+    border-color: #8D6CD9;
+    box-shadow: 0 0 0 4px rgba(141, 108, 217, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Style des options du select */
+#festival-select option {
+    padding: 16px;
+    font-size: 15px;
+    color: #1F2937;
+    background-color: white;
+}
+
+/* Effet de fond lors de la sélection */
+#festival-select option:checked,
+#festival-select option:hover {
+    background: linear-gradient(to right, rgba(141, 108, 217, 0.1), rgba(141, 108, 217, 0.05));
+    color: #8D6CD9;
+}
+
+/* Animation subtile pour l'icône au hover/focus */
+#festival-select:hover,
+#festival-select:focus {
+    background-position: right 16px center;
+}
+
+/* Styles spécifiques pour les icônes de l'expérience */
+.section-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.section-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Remplacer/ajouter ces styles pour les cartes */
+.card[data-type="trajets"] {
+    background-color: #E5E5FF;
+}
+
+.card[data-type="actualites"] {
+    background-color: var(--pistache); 
+}
+
+.card[data-type="jeux"] {
+    background-color: var(--vert-eau); 
+}
+
+.card[data-type="playlists"] {
+    background-color: var(--light-pink); 
+}
+
+/* Animation de la flèche au hover */
+.card:not([data-index="1"]):hover .card-arrow {
+    transform: rotate(-180deg);
+}
+
+/* Styles pour la section jeux */
+.game-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding: 4px;
+}
+
+.filter-tag {
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000B58;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.filter-tag.active {
+    background: #000B58;
+    color: white;
+}
+
+.filter-tag:hover:not(.active) {
+    background: rgba(0, 11, 88, 0.1);
+}
+
+/* Grille de jeux */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    padding: 5px 0;
+}
+
+.game-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.game-image {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.game-image img {
+    width: 100%;
+    height: 104%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.game-info {
+    padding: 16px;
+    background: white;
+}
+
+.game-info h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000B58;
+    margin: 0 0 4px 0;
+}
+
+.game-info p {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* Filtres */
+.game-filters {
+    display: flex;
+    gap: 12px;
+    margin: 0 0 24px 0;
+    padding: 4px;
+}
+
+.filter-tag {
+    padding: 10px 20px;
+    border-radius: 100px;
+    background: white;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000B58;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filter-tag.active {
+    background: #000B58;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 11, 88, 0.2);
+}
+
+.filter-tag:hover:not(.active) {
+    background: rgba(0, 11, 88, 0.05);
+    transform: translateY(-1px);
+}
+
+/* Styles pour la section playlists */
+.supermix-banner {
+    background: #000B58;
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.supermix-info h3 {
+    color: white;
+    font-size: 24px;
+    margin: 0 0 4px 0;
+}
+
+.supermix-info p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin: 0;
+}
+
+.play-button {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+}
+
+.playlist-section h4 {
+    font-size: 18px;
+    color: #000B58;
+    margin-bottom: 5px;
+}
+
+.playlists-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 20px;
+}
+
+.playlist-card {
+    background: transparent;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.playlist-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.playlist-card:hover {
+    transform: translateY(-4px);
+    filter: brightness(1.05);
+}
+
+/* Styles pour la section actualités */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    padding: 20px 0;
+}
+
+.news-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.news-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.news-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000B58;
+}
+
+.news-content {
+    padding: 20px;
+}
+
+.news-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000B58;
+    margin: 0 0 8px 0;
+}
+
+.news-content p {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+}
+
+.news-date {
+    font-size: 12px;
+    color: #9CA3AF;
+    font-weight: 500;
+}
+
+/* Styles pour la carte trajet augmenté */
+.trajet-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.stat-box {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #000B58;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Styles pour la carte trajet augmenté */
+.trajet-map {
+    background: white;
+    border-radius: 20px;
+    padding: 16px;
+    margin-top: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.map-header {
+    margin-bottom: 12px;
+}
+
+.map-title h3 {
+    font-size: 16px;
+    margin: 0 0 2px 0;
+}
+
+.map-subtitle {
+    font-size: 13px;
+}
+
+.map-stops {
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.stop-info h4 {
+    font-size: 14px;
+    margin: 0 0 2px 0;
+}
+
+.stop-info p {
+    font-size: 13px;
+}
+
+.trajet-suggestions {
+    margin-top: 16px;
+}
+
+.trajet-suggestions h3 {
+    font-size: 16px;
+    margin: 0 0 12px 0;
+}
+
+.suggestion-cards {
+    gap: 12px;
+}
+
+.suggestion-card {
+    padding: 12px;
+    gap: 8px;
+}
+
+.suggestion-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+}
+
+.suggestion-info h4 {
+    font-size: 14px;
+    margin: 0 0 2px 0;
+}
+
+.suggestion-info p {
+    font-size: 12px;
+}
+
+/* Ajustement de la hauteur maximale de la carte */
+.card[data-index="1"] {
+    overflow-y: auto;
+}
+
+/* Style de la scrollbar */
+.card[data-index="1"]::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card[data-index="1"]::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.card[data-index="1"]::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.card[data-index="1"]::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Stats */
+.trajet-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.stat-box {
+    background: white;
+    border-radius: 16px;
+    padding: 12px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #666;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000B58;
+}
+
+/* Carte */
+.trajet-map {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.map-title h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    color: #000B58;
+}
+
+.map-subtitle {
+    font-size: 13px;
+    color: #666;
+}
+
+.map-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 100px;
+    border: none;
+    background: #f5f5f5;
+    font-size: 13px;
+    color: #000B58;
+    cursor: pointer;
+}
+
+/* Points d'arrêt */
+.map-stops {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.stop-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.stop-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    margin-top: 4px;
+}
+
+.stop-dot.active {
+    background: #8B5CF6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.stop-info h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 2px 0;
+    color: #000B58;
+}
+
+.stop-info p {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+
+/* Suggestions */
+.trajet-suggestions {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.trajet-suggestions h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    color: #000B58;
+}
+
+.suggestion-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.suggestion-emoji {
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.suggestion-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.suggestion-text strong {
+    font-size: 14px;
+    color: #000B58;
+    margin-bottom: 2px;
+}
+
+.suggestion-text span {
+    font-size: 13px;
+    color: #666;
+}
+
+/* Style du wallet */
+.wallet-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 24px 0;
+}
+
+.wallet-item {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.wallet-item:hover {
+    transform: translateY(-4px);
+}
+
+.wallet-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wallet-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+/* Couleurs spécifiques pour chaque item du wallet */
+.wallet-item.groovies {
+    background: #8B5CF6;
+    color: white;
+}
+
+.wallet-item.qr {
+    background: #FEF08A;
+}
+
+.wallet-item.festivals {
+    background: #FECDD3;
+}
+
+.wallet-item.settings {
+    background: #86EFAC;
+}
+
+/* Style du profil */
+.profile-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1E1B4B;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-avatar {
+    width: 48px;
+    height: 48px;
+    background: #F3F4FF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.profile-name {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.profile-level {
+    color: #8B5CF6;
+    font-size: 14px;
+}

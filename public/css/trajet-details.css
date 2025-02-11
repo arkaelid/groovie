@@ -1,0 +1,523 @@
+:root {
+    --light-purple: #E7E0FF;
+    --green-yellow: #B6FFC0;
+    --light-gray: #F5F5F5;
+    --dark-gray: #1F2937;
+    --purple: #8D6CD9;
+    --yellow: #FFEB82;
+}
+
+/* Reset de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.details-container {
+    display: flex;
+    min-height: 100vh;
+    background: var(--light-gray);
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Menu latéral */
+.side-menu {
+    width: 100px;
+    background: #000B58;
+    padding: 32px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    position: fixed;
+    height: 100vh;
+}
+
+.menu-item {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu-item.active {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Contenu principal */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    margin-top: 4rem;
+    margin-left: 7rem;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+}
+
+/* Layout en grille pour les cartes */
+.cards-layout {
+    display: grid;
+    grid-template-columns: 1fr 500px;
+    gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    padding-right: 40px;
+}
+
+/* Carte principale avec map */
+.main-card {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    background: var(--light-purple);
+    border-radius: 20px;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Colonne droite */
+.right-column {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+/* Détails du trajet */
+.details-card {
+    grid-column: 2;
+    grid-row: 2;
+    background: white;
+    border-radius: 24px;
+    padding: 16px;
+    height: fit-content;
+    width: 100%;
+}
+
+/* Date et heure */
+.date-time-section {
+    display: flex;
+    justify-content: flex-start;
+    gap: 48px;
+    padding: 20px;;
+}
+
+.date-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.day {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.date .number {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--dark-gray);
+}
+
+.date .month {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--purple);
+}
+
+.time-locations {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    margin-left: 48px;
+}
+
+.time-slot {
+    display: flex;
+    justify-content: space-between;
+    min-width: 200px;
+    position: relative;
+}
+
+.time-slot:first-child::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(31, 41, 55, 0.2);
+}
+
+.time {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.location {
+    font-size: 16px;
+    color: var(--dark-gray);
+    opacity: 0.7;
+}
+
+/* Map */
+.map-placeholder {
+    flex: 1;
+    background: #D1D1D1;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+    min-height: 0; /* Important pour que flex: 1 fonctionne correctement */
+}
+
+/* Cartes secondaires */
+.title-card,
+.action-cards,
+.details-card,
+.additional-actions {
+    border-radius: 24px;
+    padding: 24px;
+}
+
+/* Titre et prix */
+.title-card {
+    background: white;
+    border-radius: 24px;
+    padding: 28px;
+}
+
+.title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.title-section h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.transport-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--yellow);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.transport-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.transport-icon svg path {
+    fill: var(--dark-gray);
+}
+
+.price-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.price {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.level {
+    padding: 6px 19px;
+    background: var(--light-purple);
+    border-radius: 100px;
+    color: var(--purple);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.groovies {
+    color: var(--purple);
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: auto;
+}
+
+.details-card h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 16px;
+    position: relative;
+    padding-left: 16px;
+}
+
+.details-card h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    background: var(--purple);
+    border-radius: 2px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.detail-item {
+    background: var(--green-yellow);
+    padding: 10px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.detail-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.label {
+    font-size: 14px;
+    color: var(--dark-gray);
+    margin-bottom: 4px;
+}
+
+.value {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.value .number {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--dark-gray);
+}
+
+.value .unit {
+    font-size: 11px;
+    color: var(--dark-gray);
+    opacity: 0.7;
+    text-align: right;
+    padding-bottom: 4px;
+    margin-left: auto;
+    min-width: 45px;
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+/* Boutons d'action */
+.action-cards {
+    background: var(--light-gray);
+    border-radius: 24px;
+    padding: 12px;
+}
+
+.action-card {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.action-button {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: none;
+}
+
+.action-button:first-child {
+    background: #E7E0FF;
+    color: var(--purple);
+}
+
+.action-button:last-child {
+    background: var(--purple);
+    color: white;
+    border: none;
+}
+
+.action-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Hover effects */
+.action-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(141, 108, 217, 0.2);
+}
+
+.action-button:active {
+    transform: translateY(0);
+}
+
+/* Actions supplémentaires */
+.additional-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: white;
+    border-radius: 24px;
+    padding: 16px;
+}
+
+.action-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--light-gray);
+    border: none;
+    border-radius: 16px;
+    color: var(--dark-gray);
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.action-link:first-child {
+    background: var(--light-purple);
+    color: var(--purple);
+}
+
+.action-link:last-child {
+    background: #E8F5E9; /* Fond vert clair */
+    color: #2E7D32; /* Texte vert foncé */
+}
+
+.action-link:last-child svg path {
+    stroke: #2E7D32; /* Icône en vert foncé */
+}
+
+.action-link:last-child:hover {
+    background: #C8E6C9; /* Fond vert plus foncé au hover */
+    color: #1B5E20; /* Texte vert plus foncé au hover */
+}
+
+.action-link:last-child:hover svg path {
+    stroke: #1B5E20; /* Icône en vert plus foncé au hover */
+}
+
+/* Ajustement de la taille des icônes */
+.action-link svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Animation spécifique pour chaque bouton */
+.action-link:first-child::after {
+    background: linear-gradient(to right, transparent, rgba(141, 108, 217, 0.1), transparent);
+}
+
+.action-link:last-child::after {
+    background: linear-gradient(to right, transparent, rgba(46, 125, 50, 0.1), transparent);
+}
+
+/* Style de la scrollbar pour details-card */
+.details-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.details-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.details-card::-webkit-scrollbar-thumb {
+    background: var(--purple);
+    border-radius: 4px;
+}
+
+/* Footer */
+footer {
+    background: #000B58;
+    padding: 24px;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin-right: 24px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .main-content {
+        padding: 24px;
+        margin-left: 0;
+    }
+    .cards-layout {
+        grid-template-columns: 1fr;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-menu {
+        display: none; /* Cache le menu latéral sur mobile */
+    }
+    
+    .map-placeholder {
+        height: 240px;
+    }
+    
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .value .number {
+        font-size: 36px;
+    }
+} 

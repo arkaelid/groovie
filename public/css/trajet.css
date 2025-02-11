@@ -1,0 +1,1597 @@
+/* Variables */
+:root {
+    --primary: #8B5CF6;
+    --primary-light: rgba(139, 92, 246, 0.1);
+    --secondary: #6366F1;
+    --text-dark: #1F2937;
+    --text-gray: #6B7280;
+    --background: #F8F7FF;
+    --white: #FFFFFF;
+    --border: #E5E7EB;
+    --pink: #FEE2E2;
+    --green: #DCFCE7;
+    --purple: #EDE9FE;
+}
+
+/* Container principal */
+.trajet-container {
+    padding: 32px 64px;
+    margin: 0 auto;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Style des cartes */
+.card-section {
+    position: absolute;
+    width: 100%;
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+.card-header {
+    padding: 0;
+    margin-bottom: 24px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.card-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.card-arrow {
+    width: 24px;
+    height: 24px;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+    transform: rotate(-90deg);
+}
+
+.card[data-index="1"] .card-arrow {
+    transform: rotate(90deg);
+}
+
+.card-title span {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000B58;
+}
+
+.card-content {
+    padding: 0 32px 32px;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+/* États des cartes */
+.card-section.folded .card-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Couleurs spécifiques */
+.mes-trajets-section {
+    background: #E7E0FF;
+    z-index: 3;
+}
+
+.offres-section {
+    background: #B6FFC0;
+    z-index: 2;
+    transform: translateY(200px);
+}
+
+.preferences-section {
+    background: #FFE7E7;
+    z-index: 1;
+    transform: translateY(400px);
+}
+
+/* État replié */
+.card-section.folded {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+/* Sections de contenu */
+.content-section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.content-section.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Style commun pour les cartes */
+.card {
+    position: absolute;
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 24px 32px;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    border: none;
+    transform-origin: center;
+    backdrop-filter: blur(8px);
+}
+
+/* Effets de hover */
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+
+.card[data-index="1"] .card-content {
+    opacity: 1;
+    height: auto;
+    transform: translateY(0);
+}
+
+.card[data-index="2"] .card-title,
+.card[data-index="3"] .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+/* Animation de la flèche */
+.card-arrow {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card[data-index="2"]:hover .card-arrow,
+.card[data-index="3"]:hover .card-arrow {
+    transform: rotate(-85deg);
+}
+
+/* Amélioration des styles spécifiques */
+#preferences-card {
+    background: linear-gradient(135deg, #FFE7E7 0%, #FFD6D6 100%);
+}
+
+#offres-card {
+    background: linear-gradient(135deg, #B6FFC0 0%, #A1FFB0 100%);
+}
+
+#trajets-card {
+    background: linear-gradient(135deg, #E7E0FF 0%, #D6CBFF 100%);
+}
+
+/* Tabs Navigation */
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.tab {
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    color: var(--text-gray);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* Grille des cartes */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+/* En-tête avec date et J- */
+.trajet-date-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trajet-countdown {
+    color: #8B5CF6;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.trajet-date {
+    color: #6B7280;
+    font-size: 14px;
+}
+
+/* Section principale */
+.trajet-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.trajet-info {
+    flex: 1;
+}
+
+.trajet-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000B58;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.trajet-location {
+    font-size: 16px;
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Section des badges */
+.trajet-badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.badge.transport {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8B5CF6;
+}
+
+.badge.groovies {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+}
+
+/* En-tête de la carte */
+.trajet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Groupe d'utilisateurs */
+.user-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-user {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    border: 2px solid white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.trajet-card:hover .add-user {
+    transform: scale(1.1);
+}
+
+/* Bouton de téléchargement */
+.download-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: rgba(139, 92, 246, 0.1);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #8B5CF6;
+}
+
+.trajet-card:hover .download-button {
+    background: #8B5CF6;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* État vide */
+.empty-state {
+    text-align: center;
+    padding: 35px 24px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 24px;
+    backdrop-filter: blur(8px);
+}
+
+.empty-state h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000B58;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 16px;
+    color: #6B7280;
+    margin-bottom: 24px;
+}
+
+.empty-state-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.empty-state-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.25);
+}
+
+.empty-state-button i {
+    font-size: 14px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .trajet-container {
+        padding: 16px;
+        margin-left: 0;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab {
+        white-space: nowrap;
+    }
+}
+
+/* Navigation des onglets */
+.tabs-nav {
+    display: flex;
+    gap: 24px;
+    padding: 16px 64px;
+    margin-top: 7rem;
+    margin-left: 100px;
+}
+
+.tab-link {
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    color: #000B58;
+    background: transparent;
+}
+
+.tab-link[href="#preferences"].active {
+    background-color: #FF9999;
+    color: white;
+}
+
+.tab-link[href="#offres"].active {
+    background-color: #4ABF75;
+    color: white;
+}
+
+.tab-link[href="#trajets"].active {
+    background-color: #8D6CD9;
+    color: white;
+}
+
+.tab-link[href="#preferences"]:not(.active):hover {
+    background-color: rgba(255, 153, 153, 0.1);
+}
+
+.tab-link[href="#offres"]:not(.active):hover {
+    background-color: rgba(74, 191, 117, 0.1);
+}
+
+.tab-link[href="#trajets"]:not(.active):hover {
+    background-color: rgba(141, 108, 217, 0.1);
+}
+
+/* Style commun pour les sections */
+.preferences-section,
+.offres-section,
+.mes-trajets-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 24px;
+    padding: 32px;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+/* Z-index et position des sections */
+.preferences-section {
+    background: #FFE7E7;
+    z-index: 1;
+    transform-origin: top;
+}
+
+.offres-section {
+    background: #B6FFC0;
+    z-index: 2;
+    transform-origin: top;
+}
+
+.mes-trajets-section {
+    background: #E7E0FF;
+    z-index: 3;
+    transform-origin: top;
+}
+
+/* État déplié/replié des sections */
+.preferences-section.hidden,
+.offres-section.hidden,
+.mes-trajets-section.hidden {
+    transform: scale(0.95);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.preferences-section:not(.hidden),
+.offres-section:not(.hidden),
+.mes-trajets-section:not(.hidden) {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Ajustement des marges pour l'effet d'empilement */
+.preferences-section {
+    margin-top: 400px;
+}
+
+.offres-section {
+    margin-top: 200px;
+}
+
+.mes-trajets-section {
+    margin-top: 0;
+}
+
+/* Animation de transition */
+.preferences-section,
+.offres-section,
+.mes-trajets-section {
+    transition: all 0.3s ease;
+}
+
+/* Section Préférences */
+.preferences-section {
+    background: #FFE7E7;
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.preferences-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.preferences-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.preferences-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.preferences-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--midnight-blue);
+}
+
+.preferences-title span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.preferences-header .fa-chevron-down {
+    font-size: 16px;
+    color: var(--midnight-blue);
+    opacity: 0.5;
+}
+
+.header-separator {
+    height: 1px;
+    background-color: rgba(0, 11, 88, 0.1);
+    margin: 16px 0;
+    width: 100%;
+}
+
+.separator {
+    height: 1px;
+    background-color: rgba(0, 11, 88, 0.1);
+    margin: 16px 0;
+    width: 100%;
+}
+
+/* Mise à jour des espacements des groupes */
+.preference-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.preference-group:last-child .separator {
+    display: none;
+}
+
+.preference-group label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--midnight-blue);
+}
+
+.preference-group input,
+.preference-group select {
+    height: 48px;
+    border-radius: 12px;
+    border: none;
+    padding: 0 16px;
+    background: white;
+    font-size: 15px;
+    color: var(--midnight-blue);
+}
+
+.date-group {
+    display: flex;
+    gap: 16px;
+}
+
+.date-input {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.date-input select {
+    height: 48px;
+    border-radius: 12px;
+    border: none;
+    padding: 0 16px;
+    background: white;
+    font-size: 15px;
+    color: var(--midnight-blue);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23000B58' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
+
+.transport-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.transport-option {
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    color: var(--midnight-blue);
+}
+
+.transport-option i {
+    font-size: 16px;
+}
+
+.transport-option:hover,
+.transport-option.active {
+    background: var(--purple);
+    color: white;
+}
+
+/* Section Offres Disponibles */
+.offres-section {
+    background: #B6FFC0;
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.offres-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.offres-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.offres-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.offres-title span {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--midnight-blue);
+}
+
+.offres-header .fa-chevron-down {
+    font-size: 16px;
+    color: var(--midnight-blue);
+    opacity: 0.5;
+}
+
+/* Styles des filtres */
+.offres-filters {
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.offres-filters.show {
+    opacity: 1;
+    height: auto;
+    display: block;
+    margin-bottom: 24px;
+}
+
+/* Style des boutons de filtres */
+.filter-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.filter-button {
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.filter-button[data-action="all"] {
+    background: white;
+    color: #1F2937;
+}
+
+.filter-button[data-action="filter"] {
+    background: #000B58;
+    color: white;
+}
+
+.filter-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Style de la section des offres */
+.offres-section {
+    margin-top: 32px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1F2937;
+}
+
+.see-all {
+    font-size: 14px;
+    color: #4ABF75;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.see-all:hover {
+    color: #3da364;
+    text-decoration: underline;
+}
+
+
+/* Carte d'offre */
+.offer-card {
+    flex: 0 0 300px;
+    min-width: 300px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    text-decoration: none;
+    border: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.offer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(139, 92, 246, 0.12);
+    border-color: rgba(139, 92, 246, 0.2);
+}
+
+/* En-tête de l'offre */
+.offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.offer-timing {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.offer-time {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000B58;
+}
+
+.offer-date {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.groovies-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 100px;
+    color: #8B5CF6;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Contenu principal */
+.offer-main {
+    background: #F8F7FF;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.transport-type {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.transport-icon {
+    width: 48px;
+    height: 48px;
+    background: #8B5CF6;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+}
+
+.transport-type h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000B58;
+    margin: 0;
+}
+
+.offer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.offer-location, .offer-promo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #6B7280;
+}
+
+/* Pied de carte */
+.offer-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn.share {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(139, 92, 246, 0.1);
+    color: #8B5CF6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btn.details {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #8B5CF6;
+    color: white;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.action-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Section Mes Trajets */
+.mes-trajets-section {
+    background: #E7E0FF;
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.mes-trajets-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.mes-trajets-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mes-trajets-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.mes-trajets-title span {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--midnight-blue);
+}
+
+.trajets-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 100px;
+    width: fit-content;
+}
+
+.trajet-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 24px;
+    border-radius: 100px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    color: var(--text-dark);
+}
+
+.trajet-tab span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(141, 108, 217, 0.1);
+    color: #8D6CD9;
+}
+
+.trajet-tab.active {
+    background: #8D6CD9;
+    color: white;
+    box-shadow: 0 4px 12px rgba(141, 108, 217, 0.2);
+}
+
+.trajet-tab.active span {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.trajet-tab:not(.active):hover {
+    background: rgba(141, 108, 217, 0.05);
+}
+
+.trajet-tab, .trajet-tab span {
+    transition: all 0.3s ease-in-out;
+}
+
+.trajet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.trajet-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    width: 100%;
+    max-width: 300px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.trajet-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* En-tête */
+.trajet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trajet-timing {
+    display: flex;
+    gap: 10rem;
+    align-items: center;
+}
+
+.countdown {
+    color: #8B5CF6;
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.date {
+    color: #6B7280;
+    font-size: 14px;
+}
+
+/* Titre et lieu */
+.trajet-main {
+    margin-top: 4px;
+}
+
+.title {
+    color: #000B58;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #6B7280;
+    font-size: 16px;
+}
+
+/* Badges */
+.trajet-info {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.transport-badge, .groovies-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.transport-badge {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8B5CF6;
+}
+
+.groovies-badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+}
+
+/* Actions */
+.trajet-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn.qr {
+    background: #8B5CF6;
+    color: white;
+}
+
+.action-btn.bike {
+    background: #A7F3D0;
+    color: #047857;
+}
+
+.action-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* État vide */
+.empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    background: white;
+    border-radius: 24px;
+}
+
+.cards-container {
+    position: relative;
+    width: 80%;
+    height: 100vh;
+    margin-left: 3rem;
+    margin-top: 3rem;
+    padding: 0 100px;
+}
+
+/* Styles spécifiques pour chaque carte */
+#preferences-card {
+    background: #FFE7E7;
+}
+
+#offres-card {
+    background: #B6FFC0;
+}
+
+#trajets-card {
+    background: #E7E0FF;
+}
+
+.card-icon {
+    width: 44px;
+    height: 44px;
+}
+
+
+/* États des cartes selon leur position */
+.card[data-index="1"] {
+    top: 50px;
+    z-index: 0;
+    height: 575px;
+    transform: scale(0.9);
+}
+
+.card[data-index="2"] {
+    top: calc(106vh - 245px);
+    z-index: 2;
+    height: 80px;
+    transform: scale(0.9);
+}
+
+.card[data-index="3"] {
+    top: calc(106vh - 175px);
+    z-index: 1;
+    height: 80px;
+    transform: scale(0.9);
+}
+
+.card[data-index="2"] .card-title,
+.card[data-index="3"] .card-title {
+    font-size: 1.2rem;
+}
+
+/* Styles pour le contenu interne */
+.trajets-tabs,
+.empty-state,
+.offres-filters,
+.preferences-form {
+    opacity: inherit;
+    height: inherit;
+}
+/* Ajustement du hover sur les cartes repliées */
+.card[data-index="2"]:hover .card-arrow,
+.card[data-index="3"]:hover .card-arrow {
+    transform: rotate(-80deg);
+}
+
+/* Offers Sections */
+.offers-section {
+    margin-top: 24px;
+    padding-bottom: 16px;
+}
+
+.see-all {
+    color: var(--midnight-blue);
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.offer-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.offer-image {
+    position: relative;
+    height: 140px;
+    min-height: 140px;
+    width: 100%;
+    background: #f0f0f0;
+}
+
+.offer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.groovies-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--purple);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.offer-icon {
+    position: absolute;
+    bottom: -16px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.offer-content {
+    padding: 20px 16px;
+    background: white;
+    flex: 1;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.offer-content h4 {
+    font-size: 16px;
+    color: var(--midnight-blue);
+    margin: 0;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.offer-content p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.trajets-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Ajoute un espace entre les cards */
+    justify-content: center; /* Centre les cards */
+}
+
+.trajet-card {
+    width: 90%; 
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: "Arial", sans-serif;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.trajet-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.trajet-icon img {
+    width: 32px; 
+    height: 32px;
+    margin-right: 5px;
+}
+
+.trajet-details {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.trajet-card-body {
+    text-align: left;
+    margin: 10px 0;
+}
+
+.trajet-card-body h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.trajet-card-body p {
+    font-size: 14px;
+    color: black;
+}
+
+.trajet-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trajet-card-footer img {
+    width: 25px;
+    height: 25px;
+}
+
+/* Style du conteneur de sélection du festival */
+.festival-select-container {
+    margin: 24px 0;
+    width: 100%;
+    position: relative;
+}
+
+.festival-select-container label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6B7280;
+    margin-bottom: 8px;
+}
+
+#festival-select {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 15px;
+    color: #1F2937;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%238D6CD9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    padding-right: 48px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+}
+
+#festival-select:hover {
+    background-color: white;
+    border-color: rgba(141, 108, 217, 0.3);
+    box-shadow: 0 4px 12px rgba(141, 108, 217, 0.1);
+    transform: translateY(-1px);
+}
+
+#festival-select:focus {
+    outline: none;
+    background-color: white;
+    border-color: #8D6CD9;
+    box-shadow: 0 0 0 4px rgba(141, 108, 217, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Style des options du select */
+#festival-select option {
+    padding: 16px;
+    font-size: 15px;
+    color: #1F2937;
+    background-color: white;
+}
+
+/* Effet de fond lors de la sélection */
+#festival-select option:checked,
+#festival-select option:hover {
+    background: linear-gradient(to right, rgba(141, 108, 217, 0.1), rgba(141, 108, 217, 0.05));
+    color: #8D6CD9;
+}
+
+/* Animation subtile pour l'icône au hover/focus */
+#festival-select:hover,
+#festival-select:focus {
+    background-position: right 16px center;
+}
+
+/* Effet de bordure au hover */
+.trajet-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #8B5CF6, #6366F1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Effets au hover */
+.trajet-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(139, 92, 246, 0.12);
+    border-color: rgba(139, 92, 246, 0.2);
+}
+
+.trajet-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(139, 92, 246, 0.12);
+    border-color: rgba(139, 92, 246, 0.2);
+}
+
+.trajet-card:hover::before {
+    opacity: 1;
+}
+
+/* Animation des badges au hover */
+.trajet-card:hover .transport-badge,
+.trajet-card:hover .groovies-badge {
+    transform: scale(1.05);
+}
+
+/* Animation du titre au hover */
+.trajet-card:hover .title {
+    color: #8B5CF6;
+}
+
+/* Animation de la date au hover */
+.trajet-card:hover .countdown {
+    transform: scale(1.05);
+}
+
+/* Container des offres */
+.offers-container {
+    width: 100%;
+    position: relative;
+    padding: 0 50px;
+}
+
+/* Grille d'offres */
+.offers-grid {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 20px 0;
+    /* Style de la scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.3) rgba(139, 92, 246, 0.1);
+}
+
+/* Style de la scrollbar pour Chrome/Safari/Opera */
+.offers-grid::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+
+.offers-grid::-webkit-scrollbar-track {
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 100px;
+}
+
+.offers-grid::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.3);
+    border-radius: 100px;
+}
+
+.offers-grid::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.5);
+}
+
+/* Carte d'offre */
+.offer-card {
+    flex: 0 0 300px;
+    min-width: 300px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    text-decoration: none;
+    border: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+/* Flèches de navigation */
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    color: #8B5CF6;
+    transition: all 0.2s ease;
+}
+
+.scroll-arrow:hover {
+    background: #8B5CF6;
+    color: white;
+}
+
+.scroll-arrow.scroll-left {
+    left: 0;
+}
+
+.scroll-arrow.scroll-right {
+    right: 0;
+}
+
+/* Animation des flèches */
+.scroll-arrow i {
+    font-size: 16px;
+}
